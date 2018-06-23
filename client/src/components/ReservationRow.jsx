@@ -48,6 +48,7 @@ class ReservationRow extends React.Component {
     }
 
     arrayOfAvailability(beds) {
+        console.log(beds);
         let current = 1;
         let final = [];
         while (current <= beds) {
@@ -59,7 +60,8 @@ class ReservationRow extends React.Component {
 
     handleChange(e) {
         this.setState({value: e.target.value});
-        this.props.set(this.props.room, e.target.value, this.average(), this.props.index)
+        console.log('selected', e.target.value);
+        this.props.set(this.props.room, e.target.value, this.props.room[0].price, this.props.index)
     }
 
     render() {
@@ -67,11 +69,11 @@ class ReservationRow extends React.Component {
         return (
             <tr>
                 <Td>{this.props.room[0].maxBeds} Bed Room </Td>
-                <Td>${this.average()}</Td>
+                <Td>${this.props.room[0].price}</Td>
                 <Td>
                     <DropDown onChange={this.handleChange}>
                         <option>Select</option>
-                        {this.arrayOfAvailability(this.leastBedsLeft(this.props.room)).map((bed) => <option key={bed} value={bed}>{bed} bed(s)</option>)}
+                        {this.arrayOfAvailability(this.props.room[0].bedsLeft).map((bed) => <option key={bed} value={bed}>{bed} bed(s)</option>)}
                     </DropDown>
                 </Td>
             </tr>

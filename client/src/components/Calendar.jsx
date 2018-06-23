@@ -97,6 +97,7 @@ class Calendar extends React.Component {
     }
 
     componentDidMount() {
+        console.log(this.props.date);
         const date = this.props.date.split('-')
         const month = date[1];
         const year = date[0];
@@ -142,7 +143,6 @@ class Calendar extends React.Component {
 
     clickDate(num) {
         this.setState({ clickedDate: num })
-        
     }
 
     backMonth() {

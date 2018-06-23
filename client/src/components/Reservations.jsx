@@ -81,9 +81,7 @@ class Reservations extends React.Component {
                     </thead>
                     <StyledBody>
                         {this.props.rooms.map((room, index) => {
-                            let hasRoom = true;
-                            room.room.forEach(date => {if (date.bedsLeft === 0) hasRoom = false;})
-                            if (hasRoom) return <ReservationRow key={index} room={room.room} index={index} set={this.props.set}/>
+                            return <ReservationRow key={index} room={room.room} index={index} set={this.props.set}/>
                         })}
                     </StyledBody>
                 </StyledTable>

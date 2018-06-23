@@ -63,49 +63,23 @@ class Booking extends React.Component {
     
     initializeRoom() {
         if (window.location.pathname === '/') {
-            fetch(`/api/hostels/1/reservations?start=${this.state.startDate}&end=${this.state.endDate}`)
+            fetch(`/api/hostels/1/reservations?start=${this.startDate}&end=${this.state.endDate}`)
             .then(response => response.json())
             .then(response => {
                 let clone = JSON.parse(JSON.stringify(response));
                 this.setState({unfiltered: clone});
-                this.filterByDate(response);
+                this.setState({hotelRooms: {rooms: response.rooms}});
              })
         } else {
             let path = window.location.pathname;
-            fetch(`/api/hostels${path}reservations?start=${this.state.startDate}&end=${this.state.endDate}`)
+            fetch(`/api/hostels${path}reservations?start=${this.startHolder}&end=${this.endHolder}`)
             .then(response => response.json())
             .then(response => {
                 let clone = JSON.parse(JSON.stringify(response));
                 this.setState({unfiltered: clone});
-                this.filterByDate(response);
+                this.setState({hotelRooms: {rooms: response.rooms}});
             })
         }
-    }
-
-    // create JS dates by using new Date() with isodate as input
-    filterByDate(rawData) {
-        const dateList = rawData.rooms[0].room;
-        dateList.forEach((data, index) => {
-            const date = data.date.split('T')[0];
-            if (this.parseDate(date) === this.parseDate(this.state.startDate)) {
-                this.setState({ startPoint: index});
-            }   else if (this.parseDate(date) === this.parseDate(this.state.endDate)) {
-                this.setState({ endPoint: index });
-            }
-        });
-        const roomList = rawData.rooms;
-        roomList.map((room, index) => {
-            room.room = room.room.slice(this.state.startPoint, this.state.endPoint + 1)
-        });
-        this.setState({hotelRooms: {rooms: roomList}});
-    }
-
-    parseDate(string) {
-        let date = string.split('-')
-        let year = date[0];
-        let month = date[1];
-        let day = date[2];
-        return new Date(year, month, day).getTime();
     }
 
     setCurrentRoom(room, beds, avg, index) {
@@ -170,7 +144,7 @@ class Booking extends React.Component {
                 selectedRooms: [],
                 total: 0,
             })
-            this.initializeRoom()
+            this.initializeRoom();
         }
     }
 
