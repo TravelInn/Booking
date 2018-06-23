@@ -1,9 +1,0 @@
-{
-  "AWSEBDockerrunVersion": "1",
-  "Image": {
-    "Name": "yogurtandjam/bookingmodule:soloModule"
-  },
-  "Ports": [
-    {"ContainerPort": "3003"}
-  ]
-}

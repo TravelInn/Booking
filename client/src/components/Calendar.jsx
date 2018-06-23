@@ -191,8 +191,6 @@ class Calendar extends React.Component {
                                 clickDate={this.clickDate}
                                 clickedDate={this.state.clickedDate}
                                 startHolder={this.props.startHolder}
-                                hotelRooms={this.props.hotelRooms}
-                                unfiltered={this.props.unfiltered}
                             />)}
                     </FlexCal>
                 </Cal>

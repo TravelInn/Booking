@@ -37,7 +37,7 @@ class CDate extends React.Component {
     
     componentDidMount() {
         let test = new Date(this.props.year, this.props.month, this.props.day)
-        let test2 = this.props.unfiltered.rooms[0].room[this.props.unfiltered.rooms[0].room.length - 1].date
+        let test2 = '2018-08-16T00:00:00.000Z'
         let test3= test2.split('T')[0]
         let testfin = this.parseDate(test3)
     }
@@ -64,9 +64,8 @@ class CDate extends React.Component {
 
 
     render() {
-        let earliestDate = 0;
-        let data = this.props.unfiltered.rooms[0].room;
-        let lastFetchedDate = this.parseDate(data[data.length - 1].date);
+        let earliestDate;
+        let lastFetchedDate = this.parseDate('2018-08-16T00:00:00.000Z');
         if (this.props.startHolder) {
             earliestDate = new Date(...this.props.startHolder.split('-'))
         }

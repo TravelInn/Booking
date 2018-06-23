@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 
 const retry = () => {
-mongoose.connect('mongodb://database/bookings').then(()=>{
+mongoose.connect('mongodb://localhost/bookings').then(()=>{
   console.log('connected to database')
 }).catch(err=>{
   console.log(err, 'retry in 5 seconds')

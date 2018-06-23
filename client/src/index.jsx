@@ -34,8 +34,8 @@ class Booking extends React.Component {
             unfiltered: {},
             lastUnfiltered: {},
             hotelRooms: { rooms: [] },
-            startDate: '2018-06-2',
-            endDate: '2018-06-5',
+            startDate: '2018-05-19',
+            endDate: '2018-05-21',
             startPoint: 0,
             endPoint: 0,
             currentRoom: {},
@@ -62,8 +62,8 @@ class Booking extends React.Component {
     }
     
     initializeRoom() {
-        if (window.location.pathname === '/') {      
-            fetch(`/api/hostels/1/reservations`)
+        if (window.location.pathname === '/') {
+            fetch(`/api/hostels/1/reservations?start=${this.state.startDate}&end=${this.state.endDate}`)
             .then(response => response.json())
             .then(response => {
                 let clone = JSON.parse(JSON.stringify(response));
@@ -72,7 +72,7 @@ class Booking extends React.Component {
              })
         } else {
             let path = window.location.pathname;
-            fetch(`/api/hostels${path}reservations`)
+            fetch(`/api/hostels${path}reservations?start=${this.state.startDate}&end=${this.state.endDate}`)
             .then(response => response.json())
             .then(response => {
                 let clone = JSON.parse(JSON.stringify(response));
