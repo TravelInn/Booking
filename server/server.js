@@ -1,8 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const db = require('../database/db.js');
 const morgan = require('morgan');
 const cors = require('cors');
+const db = require('../database/index');
+const helpers = require('./helpers');
+const Promise = require('bluebird');
 
 const app = express();
 
@@ -18,35 +20,36 @@ const server = app.listen(port, () => {
 });
 
 app.get('/api/hostels/:hostelId/reservations', (req, res) => {
-  // db.serveHotel(req.params.hostelId, (err, data) => {
-  //   if (err) console.log('there was an error', err);
-  //   else res.send(data);
-  // });
-  const fakeData = {
-    rooms: [
-      {
-        room: [
-          {
-            price: 10,
-            maxBeds: 10,
-            date: '2018-06-18',
-            bedsLeft: 3,
-          },
-        ],
-      },
-      {
-        room: [
-          {
-            price: 5,
-            maxBeds: 5,
-            date: '2018-06-18',
-            bedsLeft: 2,
-          },
-        ],
-      },
-    ],
-  };
-  res.send(JSON.stringify(fakeData));
+  const startDate = helpers.numberDate(req.query.start);
+  const endDate = helpers.numberDate(req.query.end);
+  let rooms = null;
+
+  db.getRooms(req.params.hostelId, startDate, endDate)
+    .then((result) => {
+      rooms = result.rows;
+      console.log(rooms);
+      return db.getBookings(req.params.hostelId, startDate, endDate);
+    })
+    .then((bookings) => {
+      const available = helpers.filterBookings([startDate, endDate], bookings.rows, rooms);
+      res.send(JSON.stringify(available));
+    })
+    .catch((err) => {
+      console.error(err);
+      res.send(JSON.stringify(err));
+    });
+});
+
+app.post('/api/hostels/:hostelId/reservations', (req, res) => {
+  //Connect to database and do stuff
+});
+
+app.put('/api/hostels/:hostelId/reservations', (req, res) => {
+  //Connect to database and do stuff
+});
+
+app.delete('/api/hostels/:hostelId/reservations', (req, res) => {
+  //connect to database and do stuff
 });
 
 module.exports = server;
