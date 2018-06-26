@@ -34,8 +34,8 @@ class Booking extends React.Component {
             unfiltered: {},
             lastUnfiltered: {},
             hotelRooms: { rooms: [] },
-            startDate: '2018-05-19',
-            endDate: '2018-05-21',
+            startDate: '2018-06-19',
+            endDate: '2018-06-21',
             startPoint: 0,
             endPoint: 0,
             currentRoom: {},
@@ -46,8 +46,8 @@ class Booking extends React.Component {
             startCal: false,
             endCal: false,
         }
-        let startHolder = this.state.startDate;
-        let endHolder = this.state.endDate;
+        this.startHolder = '2018-06-19';
+        this.endHolder = '2018-06-21';
         this.setCurrentRoom = this.setCurrentRoom.bind(this);
         this.updateTotal = this.updateTotal.bind(this);
         this.turnOff = this.turnOff.bind(this);
