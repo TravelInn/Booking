@@ -1,0 +1,10 @@
+config:
+  target: 'http://localhost:3003'
+  phases:
+    - duration: 600
+      arrivalRate: 1
+      rampTo: 500
+scenarios:
+  - flow:
+    - get:
+        url: "/api/hostels/{{$randomNumber(1,9000000)}}/reservations?start=2018-06-21&end=2018-06-25"
