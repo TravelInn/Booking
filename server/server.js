@@ -1,3 +1,4 @@
+require('newrelic');
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
@@ -27,7 +28,6 @@ app.get('/api/hostels/:hostelId/reservations', (req, res) => {
   db.getRooms(req.params.hostelId, startDate, endDate)
     .then((result) => {
       rooms = result.rows;
-      console.log(rooms);
       return db.getBookings(req.params.hostelId, startDate, endDate);
     })
     .then((bookings) => {
@@ -40,8 +40,15 @@ app.get('/api/hostels/:hostelId/reservations', (req, res) => {
     });
 });
 
-app.post('/api/hostels/:hostelId/reservations', (req, res) => {
-  //Connect to database and do stuff
+app.post('/api/rooms/:roomId/bookings', (req, res) => {
+  db.insertBooking(req.params.roomId, req.body.start, req.body.end)
+    .then((result) => {
+      console.log('inserted', result);
+      res.send('inserted');
+    })
+    .catch((err) => {
+      res.send(JSON.stringify(err));
+    });
 });
 
 app.put('/api/hostels/:hostelId/reservations', (req, res) => {

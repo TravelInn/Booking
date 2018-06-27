@@ -14,6 +14,12 @@ module.exports.getRooms = id =>
 
 module.exports.getBookings = (id, start, end) =>
   client.query(
-    'SELECT foo.id, foo.price, foo.beds, bookings.startdate, bookings.enddate FROM (select * from rooms WHERE hostel_id=$1) AS foo JOIN bookings ON foo.id=bookings.room_id WHERE (bookings.startdate<=$3 AND bookings.startdate>=$2) OR (bookings.enddate<=$3 AND bookings.enddate>=$2)',
+    'SELECT foo.id, foo.price, foo.beds, bookings.startdate, bookings.enddate FROM (SELECT (id, price, beds) FROM rooms WHERE hostel_id=$1) AS foo JOIN bookings ON foo.id=bookings.room_id WHERE (bookings.startdate<=$3 AND bookings.startdate>=$2) OR (bookings.enddate<=$3 AND bookings.enddate>=$2)',
     [id, start, end],
+  );
+
+module.exports.insertBooking = (roomId, start, end) =>
+  client.query(
+    'INSERT INTO bookings (room_id, startdate, enddate) VALUES ($1, $2, $3)',
+    [roomId, start, end],
   );
