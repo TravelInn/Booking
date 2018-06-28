@@ -1,0 +1,14 @@
+config:
+  target: 'http://localhost:3003'
+  phases:
+    - duration: 600
+      arrivalRate: 1
+      rampTo: 1100
+scenarios:
+  - flow:
+    - post:
+        url: "/api/rooms/{{$randomNumber(1,19998000)}}/bookings"
+
+        json:
+          start: 0
+          end: 4
