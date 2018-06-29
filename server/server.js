@@ -13,10 +13,12 @@ const get = (req, res) => {
   let rooms = null;
   db.getRooms(req.params.hostelId)
     .then((result) => {
+      console.log('got rooms!', result.rows);
       rooms = result.rows;
       return db.getBookings(req.params.hostelId, startDate, endDate);
     })
     .then((bookings) => {
+      console.log('got bookings!');
       const available = helpers.filterBookings([startDate, endDate], bookings.rows, rooms);
       res.send(JSON.stringify(available));
     })

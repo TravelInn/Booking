@@ -1,7 +1,7 @@
 'use strict'
 /**
  * New Relic agent configuration.
- *
+ * Hello
  * See lib/config/default.js in the agent distribution for a more complete
  * description of configuration variables and their potential values.
  */
@@ -9,11 +9,11 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name: ['travelinn-booking'],
+  app_name: [process.env.APP_NAME],
   /**
    * Your New Relic license key.
    */
-  license_key: '369ce8bf06653cf1269a6f3281e4c57eb396b6cb',
+  license_key: process.env.NEW_RELIC,
   logging: {
     /**
      * Level at which to log. 'trace' is most useful to New Relic when diagnosing
