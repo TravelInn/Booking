@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const fs = require('fs');
 const db = require('../database/index');
 const helpers = require('./helpers');
+const cors = require('cors');
 
 const get = (req, res) => {
   const startDate = helpers.numberDate(req.query.start);
@@ -44,6 +45,8 @@ const post = (req, res) => {
 const app = express();
 
 app.use(morgan('tiny'));
+
+app.use(cors());
 
 app.get('/api/hostels/:hostelId/reservations', get);
 
