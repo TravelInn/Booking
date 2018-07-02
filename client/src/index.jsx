@@ -5,6 +5,7 @@ import Reservations from './components/Reservations.jsx';
 import ReservationConfirm from './components/ReservationConfirm.jsx';
 import { CSSTransitionGroup } from 'react-transition-group';
 import styled from 'styled-components';
+import helpers from './components/helpers';
 
 const Container = styled.div.attrs({
     className: 'container'
@@ -66,6 +67,7 @@ class Booking extends React.Component {
             fetch(`/api/hostels/1/reservations?start=${this.startHolder}&end=${this.endHolder}`)
             .then(response => response.json())
             .then(response => {
+                response = helpers.filterBookings([response.startDate, response.endDate], response.bookings, response.rooms);
                 let clone = JSON.parse(JSON.stringify(response));
                 this.setState({unfiltered: clone});
                 this.setState({hotelRooms: {rooms: response.rooms}});
@@ -75,6 +77,7 @@ class Booking extends React.Component {
             fetch(`/api/hostels${path}reservations?start=${this.startHolder}&end=${this.endHolder}`)
             .then(response => response.json())
             .then(response => {
+                response = helpers.filterBookings([response.startDate, response.endDate], response.bookings, response.rooms);
                 let clone = JSON.parse(JSON.stringify(response));
                 this.setState({unfiltered: clone});
                 this.setState({hotelRooms: {rooms: response.rooms}});

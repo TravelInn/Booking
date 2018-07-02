@@ -16,8 +16,13 @@ const get = (req, res) => {
       return db.getBookings(req.params.hostelId, startDate, endDate);
     })
     .then((bookings) => {
-      const available = helpers.filterBookings([startDate, endDate], bookings.rows, rooms);
-      res.send(JSON.stringify(available));
+      // const available = helpers.filterBookings([startDate, endDate], bookings.rows, rooms);
+      res.send(JSON.stringify({
+        startDate,
+        endDate,
+        bookings: bookings.rows,
+        rooms,
+      }));
     })
     .catch((err) => {
       res.statusCode = 503;
