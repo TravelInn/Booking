@@ -1,11 +1,17 @@
-const { Client } = require('pg');
+const { Client, Pool } = require('pg');
 
-const client = new Client({
-  host: 'ec2-52-8-171-154.us-west-1.compute.amazonaws.com',
+// const client = new Client({
+//   host: 'ec2-52-8-171-154.us-west-1.compute.amazonaws.com',
+//   database: 'travelinn',
+//   port: 5432,
+//   user: 'power_user',
+//   password: '$poweruserpassword',
+// });
+
+const client = new Pool({
+  host: 'localhost',
   database: 'travelinn',
   port: 5432,
-  user: 'power_user',
-  password: '$poweruserpassword',
 });
 
 client.connect();

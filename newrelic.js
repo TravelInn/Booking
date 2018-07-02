@@ -9,11 +9,11 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name: [process.env.APP_NAME],
+  app_name: ['travelinn-booking'],
   /**
    * Your New Relic license key.
    */
-  license_key: process.env.NEW_RELIC,
+  license_key: '369ce8bf06653cf1269a6f3281e4c57eb396b6cb',
   logging: {
     /**
      * Level at which to log. 'trace' is most useful to New Relic when diagnosing

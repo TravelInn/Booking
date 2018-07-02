@@ -63,7 +63,7 @@ class Booking extends React.Component {
     
     initializeRoom() {
         if (window.location.pathname === '/') {
-            fetch(`/api/hostels/1/reservations?start=${this.startDate}&end=${this.state.endDate}`)
+            fetch(`/api/hostels/1/reservations?start=${this.startHolder}&end=${this.endHolder}`)
             .then(response => response.json())
             .then(response => {
                 let clone = JSON.parse(JSON.stringify(response));
