@@ -8,13 +8,18 @@ module.exports = {
           loader: 'babel-loader',
           query: {
             presets: ['env', 'react'],
-            // plugins: ["babel-plugin-styled-components"]
+            plugins: [
+              [
+                "babel-plugin-styled-components"
+              ]
+            ]
           }
         }
       ]
     },
      output: {
-      filename: 'bundle.js',
-      path: __dirname + '/public'
+      filename: 'booking.js',
+      path: __dirname + '/public',
+      libraryTarget: 'umd',
     }
 };

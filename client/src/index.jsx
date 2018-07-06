@@ -28,13 +28,16 @@ const Styles=styled.div`
     padding-bottom: 30px;
 `
 
-class Booking extends React.Component {
+export default class Booking extends React.Component {
     constructor(props) {
         super(props);
+        let response = this.props.data || {"startDate":0,"endDate":2,"bookings":[{"id":1,"price":17,"beds":2,"startdate":2,"enddate":4}],"rooms":[{"id":1,"hostel_id":1,"price":17,"beds":2},{"id":2,"hostel_id":1,"price":9,"beds":4}]};
+        response = helpers.filterBookings([response.startDate, response.endDate], response.bookings, response.rooms);
+        const clone = JSON.parse(JSON.stringify(response));
         this.state = {
-            unfiltered: {},
+            unfiltered: clone,
             lastUnfiltered: {},
-            hotelRooms: { rooms: [] },
+            hotelRooms: {rooms: response.rooms},
             startDate: '2018-06-19',
             endDate: '2018-06-21',
             startPoint: 0,
@@ -47,8 +50,8 @@ class Booking extends React.Component {
             startCal: false,
             endCal: false,
         }
-        this.startHolder = '2018-06-19';
-        this.endHolder = '2018-06-21';
+        this.startHolder = this.props.startHolder || '2018-06-19';
+        this.endHolder = this.props.endHolder || '2018-06-21';
         this.setCurrentRoom = this.setCurrentRoom.bind(this);
         this.updateTotal = this.updateTotal.bind(this);
         this.turnOff = this.turnOff.bind(this);
@@ -59,7 +62,9 @@ class Booking extends React.Component {
     }
 
     componentDidMount() {
-        this.initializeRoom()
+        if (window && window.client) {
+            this.initializeRoom();
+        }
     }
     
     initializeRoom() {
@@ -151,6 +156,23 @@ class Booking extends React.Component {
         }
     }
 
+    renderReservations(){
+        if (1) {
+            return <Reservations rooms={this.state.hotelRooms.rooms} set={this.setCurrentRoom}/>
+        }
+    }
+
+    renderReservationsConfirm(){
+        if (1) {
+            return <ReservationConfirm 
+            room={this.state.currentRoom}
+            beds={this.state.numberOfBeds}
+            average={this.state.averagePrice}
+            selected={this.state.selectedRooms}
+            total={this.state.total}/>
+        }
+    }
+
 
     render(){
         return (
@@ -166,19 +188,15 @@ class Booking extends React.Component {
                         setEndDate={this.setEndDate}
                         submitDates={this.submitDates}
                         startHolder={this.startHolder}
-                        hotelRooms={this.state.hotelRooms}
-                        unfiltered={this.state.unfiltered}
                         />
-                    <Reservations rooms={this.state.hotelRooms.rooms} set={this.setCurrentRoom}/>
-                    <ReservationConfirm 
-                        room={this.state.currentRoom}
-                        beds={this.state.numberOfBeds}
-                        average={this.state.averagePrice}
-                        selected={this.state.selectedRooms}
-                        total={this.state.total}/>
+                    {this.renderReservations()}
+                    {this.renderReservationsConfirm()}
                 </Container>
             </Styles>
         )
     }
 }
-ReactDom.render(<Booking/>, document.getElementById('booking'));
+
+window.Booking = Booking;
+
+// ReactDom.render(<Booking/>, document.getElementById('booking'));

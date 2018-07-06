@@ -83,8 +83,6 @@ class FindBar extends React.Component {
                                     <Calendar startDate={this.props.startDate}
                                         date={this.props.startDate}
                                         setStartDate={this.props.setStartDate}
-                                        hotelRooms={this.props.hotelRooms}
-                                        unfiltered={this.props.unfiltered}
                                     id="Calendar"/>
                                 : null }
                         </DropDown> 
